@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #FF6200; /* Bright Orange */
+  --secondary: #FFFFFF; /* White for contrast */
+  --accent: #FF6200; /* Bright Orange (used for buttons, highlights) */
+  --bg-dark: #1A1A1A; /* Deep Black */
+  --bg-light: #2A2A2A; /* Slightly lighter black for cards/sections */
+  --highlight: #FF6200; /* Orange glow for effects */
+  --text-muted: #B0B0B0; /* Light gray for secondary text */
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--secondary);
+}
+
+h1, h2, h3 {
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Gradient Background */
+.gradient-bg {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--bg-dark) 100%);
+}
+
+/* Glow Effect */
+.glow-effect {
+  box-shadow: 0 0 15px var(--highlight);
+}
+
+/* Custom Utilities */
+@layer utilities {
+  /* Text Gradient */
+  .text-gradient {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Hover Glow */
+  .hover-glow:hover {
+    box-shadow: 0 0 20px var(--highlight);
+  }
+
+  /* Card Styling */
+  .card {
+    background-color: var(--bg-light);
+    border: 1px solid var(--primary);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px var(--highlight);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  .card {
+    padding: 1rem;
+  }
+}
