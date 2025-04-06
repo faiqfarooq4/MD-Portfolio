@@ -42,7 +42,7 @@ function Chatbot({ isOpen, toggleChatbot }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/api/chatbot?message=${encodeURIComponent(message)}`);
+      const res = await fetch(`https://mdbackend-vert.vercel.app/api/chatbot?message=${encodeURIComponent(message)}`);
       if (!res.ok) throw new Error("Network response was not ok");
       const data = await res.json();
       setResponse(data.response);
