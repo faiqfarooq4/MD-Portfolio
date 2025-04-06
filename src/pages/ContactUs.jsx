@@ -14,7 +14,8 @@ function ContactUs() {
     console.log("Form submitted:", formData);
 
     try {
-      const response = await fetch("https://mdbackend-vert.vercel.app/api/contact", {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000"; // Fallback for local dev
+      const response = await fetch(`${apiUrl}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +43,7 @@ function ContactUs() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1 }}
-        className="max-w-lg w-full bg-[#2A2A2A] p-8 rounded-lg shadow-lg"
+        className="max-w-lg w-full bg-[#2A2A2A] p PLEASE TRANSLATE TO URDUp-8 rounded-lg shadow-lg"
       >
         <h2 className="text-5xl font-bold text-[#FF6200] text-center mb-8">Get in Touch</h2>
         <form onSubmit={handleSubmit} className="space-y-6">

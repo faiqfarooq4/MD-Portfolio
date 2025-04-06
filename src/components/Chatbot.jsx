@@ -42,7 +42,8 @@ function Chatbot({ isOpen, toggleChatbot }) {
     }
 
     try {
-      const res = await fetch(`https://mdbackend-vert.vercel.app/api/chatbot?message=${encodeURIComponent(message)}`);
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000"; // Fallback for local dev
+      const res = await fetch(`${apiUrl}/api/chatbot?message=${encodeURIComponent(message)}`);
       if (!res.ok) throw new Error("Network response was not ok");
       const data = await res.json();
       setResponse(data.response);
