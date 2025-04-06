@@ -14,7 +14,7 @@ function ContactUs() {
     console.log("Form submitted:", formData);
 
     try {
-      const response = await fetch("http://localhost:8000/contact", {
+      const response = await fetch("http://localhost:3000/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,11 +24,11 @@ function ContactUs() {
 
       if (response.ok) {
         const result = await response.json();
-        setStatus(result.message); // "Form submitted successfully"
+        setStatus(result.message);
         setFormData({ name: "", email: "", message: "" });
       } else {
         const errorData = await response.json();
-        setStatus(`Error: ${errorData.detail}`);
+        setStatus(`Error: ${errorData.message || "Something went wrong"}`);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -74,7 +74,7 @@ function ContactUs() {
               value={formData.message}
               onChange={handleChange}
               placeholder="Your Message"
-              rows="5"
+              rows={5}
               className="w-full p-3 bg-[#1A1A1A] border border-[#FF6200] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#FF6200]"
               required
             />

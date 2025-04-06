@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function Home() {
   const [ataAnimation, setAtaAnimation] = useState(null);
+  const navigate = useNavigate(); // Initialize navigate hook
 
   // Fetch the animation data on component mount
   useEffect(() => {
@@ -12,6 +14,11 @@ function Home() {
       .then((data) => setAtaAnimation(data))
       .catch((error) => console.error("Error loading ata.json:", error));
   }, []);
+
+  // Function to handle button click and redirect
+  const handleDiscoverClick = () => {
+    navigate("/about"); // Redirect to About Us page
+  };
 
   return (
     <div className="min-h-screen gradient-bg text-white flex flex-col md:flex-row items-center justify-between py-20 px-4 relative overflow-hidden">
@@ -30,6 +37,7 @@ function Home() {
         </p>
         <motion.button
           whileHover={{ scale: 1.1, boxShadow: "0 0 20px var(--highlight)" }}
+          onClick={handleDiscoverClick} // Add onClick handler
           className="mt-8 bg-[var(--accent)] text-white py-3 px-6 md:py-4 md:px-8 rounded-full font-semibold glow-effect"
         >
           Discover My Journey

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaTimes, FaPaperPlane } from "react-icons/fa";
-import aiRobot from "../../public/assets/robot.png";
 
 function Chatbot({ isOpen, toggleChatbot }) {
   const [message, setMessage] = useState("");
@@ -43,7 +42,7 @@ function Chatbot({ isOpen, toggleChatbot }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/chatbot?message=${encodeURIComponent(message)}`);
+      const res = await fetch(`http://localhost:3000/api/chatbot?message=${encodeURIComponent(message)}`);
       if (!res.ok) throw new Error("Network response was not ok");
       const data = await res.json();
       setResponse(data.response);
@@ -60,21 +59,21 @@ function Chatbot({ isOpen, toggleChatbot }) {
         whileHover={{ scale: 1.1, rotate: 5 }}
         whileTap={{ scale: 0.95 }}
         onClick={toggleChatbot}
-        className="fixed right-6 bottom-6 bg-[var(--primary)] p-4 rounded-full shadow-lg glow-effect z-50 hover-glow"
+        className="fixed right-4 bottom-4 md:right-6 md:bottom-6 bg-[var(--primary)] p-3 md:p-4 rounded-full shadow-lg glow-effect z-50 hover-glow"
       >
-        <img src={aiRobot} alt="AI Chatbot" className="w-8 h-8 object-contain" />
+        <img src="/assets/robot.png" alt="AI Chatbot" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
       </motion.button>
 
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 50, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          className="fixed right-6 bottom-20 w-96 bg-[var(--bg-dark)] rounded-xl shadow-2xl p-6 z-50 border border-[var(--primary)]"
+          className="fixed inset-0 md:inset-auto md:right-6 md:bottom-20 md:w-96 md:h-[500px] bg-[var(--bg-dark)] rounded-t-xl md:rounded-xl shadow-2xl z-50 border border-[var(--primary)] flex flex-col"
         >
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold text-[var(--primary)] text-gradient">Kamran’s AI</h2>
+          <div className="flex justify-between items-center p-4 md:p-6 border-b border-[var(--primary)]">
+            <h2 className="text-xl md:text-2xl font-bold text-[var(--primary)] text-gradient">Kamran’s AI</h2>
             <motion.button
               whileHover={{ rotate: 90 }}
               onClick={toggleChatbot}
@@ -84,51 +83,53 @@ function Chatbot({ isOpen, toggleChatbot }) {
             </motion.button>
           </div>
 
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold text-[var(--primary)]">Quick Info</h3>
+          <div className="p-4 md:p-6 flex-shrink-0">
+            <h3 className="text-base md:text-lg font-semibold text-[var(--primary)] mb-2">Quick Info</h3>
             <div className="max-h-20 overflow-y-auto scrollbar-thin scrollbar-thumb-[var(--primary)] scrollbar-track-[var(--bg-light)]">
               {visibleFaqs.map((faq, index) => (
                 <motion.button
                   key={index}
                   whileHover={{ x: 5, color: "var(--accent)" }}
                   onClick={() => handleFaqClick(faq.answer)}
-                  className="block text-left text-sm text-[var(--text-muted)] py-1 transition-colors"
+                  className="block text-left text-xs md:text-sm text-[var(--text-muted)] py-1 transition-colors w-full"
                 >
                   {faq.question}
                 </motion.button>
               ))}
             </div>
-            <p className="text-xs text-[var(--text-muted)] mt-2 italic">Ask me anything about my portfolio!</p>
+            <p className="text-[10px] md:text-xs text-[var(--text-muted)] mt-2 italic">Ask me anything about my portfolio!</p>
           </div>
 
-          <div className="h-48 overflow-y-auto bg-[var(--bg-light)] p-4 rounded-lg mb-4 scrollbar-thin scrollbar-thumb-[var(--primary)] scrollbar-track-[var(--bg-dark)]">
+          <div className="flex-1 overflow-y-auto bg-[var(--bg-light)] p-4 md:p-4 mx-4 md:mx-6 rounded-lg scrollbar-thin scrollbar-thumb-[var(--primary)] scrollbar-track-[var(--bg-dark)]">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
-              className="text-[var(--secondary)] text-sm leading-relaxed"
+              className="text-[var(--secondary)] text-xs md:text-sm leading-relaxed"
             >
               {response || "Hey! I’m here to talk about Muhammad Kamran’s portfolio. What do you want to know?"}
             </motion.p>
           </div>
 
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="flex-1 p-3 border border-[var(--primary)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--highlight)] bg-[var(--bg-dark)] text-[var(--secondary)] placeholder-[var(--text-muted)] transition-all"
-              placeholder="Ask about me, my projects, or how to reach me..."
-              onKeyPress={(e) => e.key === "Enter" && sendMessage()}
-            />
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={sendMessage}
-              className="bg-[var(--accent)] text-[var(--secondary)] p-3 rounded-lg glow-effect"
-            >
-              <FaPaperPlane size={16} />
-            </motion.button>
+          <div className="p-4 md:p-6 flex-shrink-0 border-t border-[var(--primary)]">
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="flex-1 p-2 md:p-3 border border-[var(--primary)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--highlight)] bg-[var(--bg-dark)] text-[var(--secondary)] placeholder-[var(--text-muted)] text-xs md:text-base transition-all"
+                placeholder="Ask about me, my projects..."
+                onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+              />
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={sendMessage}
+                className="bg-[var(--accent)] text-[var(--secondary)] p-2 md:p-3 rounded-lg glow-effect"
+              >
+                <FaPaperPlane size={14} />
+              </motion.button>
+            </div>
           </div>
         </motion.div>
       )}

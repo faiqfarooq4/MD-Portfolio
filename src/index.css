@@ -14,14 +14,18 @@
   --text-muted: #B0B0B0; /* Light gray for secondary text */
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: var(--bg-dark);
-  color: var(--secondary);
-}
+@layer base {
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--secondary);
+  }
 
-h1, h2, h3 {
-  font-family: 'Orbitron', sans-serif;
+  h1,
+  h2,
+  h3 {
+    font-family: 'Orbitron', sans-serif;
+  }
 }
 
 /* Gradient Background */
@@ -34,7 +38,6 @@ h1, h2, h3 {
   box-shadow: 0 0 15px var(--highlight);
 }
 
-/* Custom Utilities */
 @layer utilities {
   /* Text Gradient */
   .text-gradient {
@@ -61,6 +64,15 @@ h1, h2, h3 {
   .card:hover {
     transform: scale(1.05);
     box-shadow: 0 0 20px var(--highlight);
+  }
+
+  /* Scrollbar Utilities */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thumb-\[var\(--primary\)\] {
+    scrollbar-color: var(--primary) var(--bg-light);
   }
 }
 
